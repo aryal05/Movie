@@ -14,11 +14,11 @@ const API_OPTIONS = {
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
   const fetchMovies = async()=>{
      try {
-      const endPoint =(`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`)
-      const response = await fetch(endPoint, API_OPTIONS)
+      const endPoint =`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const response = await fetch(endPoint, API_OPTIONS);
       if(!response.ok){
         throw new Error(response.statusText)
       }else{
@@ -31,6 +31,7 @@ const App = () => {
      }
   }
   useEffect(()=>{
+    fetchMovies()
 
   },[])
   return (
@@ -41,10 +42,11 @@ const App = () => {
           Find <span className="text-red-400">Movies</span> You'll Enjoy <br /> Without the Hassle
         </h1>
         <Search searchTerm = {searchTerm} setSearchTerm = {setSearchTerm}/>
-      </div>
-      <section>
-        <h2>All Movies</h2>
+        <section>
+        <h2 className='text-white'>All Movies</h2>
       </section>
+      </div>
+      
     </main>
   )
 }
