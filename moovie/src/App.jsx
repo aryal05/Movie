@@ -3,6 +3,8 @@ import Search from './Components/Search'
 
 const API_BASE_URL = 'https://api.themoviedb.org/3'
 const API_KEY = import.meta.env.VITE_TMBD_API_KEY;
+// console.log("API_KEY:", API_KEY);
+
 
 const API_OPTIONS = {
   method: 'GET',
@@ -15,21 +17,26 @@ const API_OPTIONS = {
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [error, setError] = useState('')
-  const fetchMovies = async()=>{
-     try {
-      const endPoint =`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
-      const response = await fetch(endPoint, API_OPTIONS);
-      if(!response.ok){
-        throw new Error(response.statusText)
-      }else{
-        const data = await response.json()
-        console.log(data) 
-      }
-     } catch (error) {
-      console.log(`Error fetching movies ${error}`)
-      setError('Error Fetching Movies Please Try Again.')
-     }
+ const fetchMovies = async () => {
+  try {
+    const endPoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+    const response = await fetch(endPoint, API_OPTIONS);
+    
+    // console.log("HTTP Status:", response.status); // log status code
+    // console.log("Response:", response); // log response object
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Error fetching movies:", error.message, error);
+    setError("Error Fetching Movies. Please Try Again.");
   }
+};
+
   useEffect(()=>{
     fetchMovies()
 
